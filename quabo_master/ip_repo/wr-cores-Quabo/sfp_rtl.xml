@@ -77,32 +77,86 @@
       </spirit:wire>
     </spirit:port>
     <spirit:port>
-      <spirit:logicalName>sfp_mod_def1_b</spirit:logicalName>
+      <spirit:logicalName>sfp_mod_def1_i</spirit:logicalName>
       <spirit:wire>
         <spirit:onMaster>
           <spirit:presence>required</spirit:presence>
           <spirit:width>1</spirit:width>
-          <spirit:direction>inout</spirit:direction>
+          <spirit:direction>in</spirit:direction>
         </spirit:onMaster>
         <spirit:onSlave>
           <spirit:presence>required</spirit:presence>
           <spirit:width>1</spirit:width>
-          <spirit:direction>inout</spirit:direction>
         </spirit:onSlave>
       </spirit:wire>
     </spirit:port>
     <spirit:port>
-      <spirit:logicalName>sfp_mod_def2_b</spirit:logicalName>
+      <spirit:logicalName>sfp_mod_def1_o</spirit:logicalName>
       <spirit:wire>
         <spirit:onMaster>
           <spirit:presence>required</spirit:presence>
           <spirit:width>1</spirit:width>
-          <spirit:direction>inout</spirit:direction>
+          <spirit:direction>out</spirit:direction>
         </spirit:onMaster>
         <spirit:onSlave>
           <spirit:presence>required</spirit:presence>
           <spirit:width>1</spirit:width>
-          <spirit:direction>inout</spirit:direction>
+        </spirit:onSlave>
+      </spirit:wire>
+    </spirit:port>
+    <spirit:port>
+      <spirit:logicalName>sfp_mod_def1_t_o</spirit:logicalName>
+      <spirit:wire>
+        <spirit:onMaster>
+          <spirit:presence>required</spirit:presence>
+          <spirit:width>1</spirit:width>
+          <spirit:direction>out</spirit:direction>
+        </spirit:onMaster>
+        <spirit:onSlave>
+          <spirit:presence>required</spirit:presence>
+          <spirit:width>1</spirit:width>
+        </spirit:onSlave>
+      </spirit:wire>
+    </spirit:port>
+    <spirit:port>
+      <spirit:logicalName>sfp_mod_def2_i</spirit:logicalName>
+      <spirit:wire>
+        <spirit:onMaster>
+          <spirit:presence>required</spirit:presence>
+          <spirit:width>1</spirit:width>
+          <spirit:direction>in</spirit:direction>
+        </spirit:onMaster>
+        <spirit:onSlave>
+          <spirit:presence>required</spirit:presence>
+          <spirit:width>1</spirit:width>
+        </spirit:onSlave>
+      </spirit:wire>
+    </spirit:port>
+    <spirit:port>
+      <spirit:logicalName>sfp_mod_def2_o</spirit:logicalName>
+      <spirit:wire>
+        <spirit:onMaster>
+          <spirit:presence>required</spirit:presence>
+          <spirit:width>1</spirit:width>
+          <spirit:direction>out</spirit:direction>
+        </spirit:onMaster>
+        <spirit:onSlave>
+          <spirit:presence>required</spirit:presence>
+          <spirit:width>1</spirit:width>
+        </spirit:onSlave>
+      </spirit:wire>
+    </spirit:port>
+    <spirit:port>
+      <spirit:logicalName>sfp_mod_def2_t_o</spirit:logicalName>
+      <spirit:wire>
+        <spirit:onMaster>
+          <spirit:presence>required</spirit:presence>
+          <spirit:width>1</spirit:width>
+          <spirit:direction>out</spirit:direction>
+        </spirit:onMaster>
+        <spirit:onSlave>
+          <spirit:presence>required</spirit:presence>
+          <spirit:width>1</spirit:width>
         </spirit:onSlave>
       </spirit:wire>
     </spirit:port>
