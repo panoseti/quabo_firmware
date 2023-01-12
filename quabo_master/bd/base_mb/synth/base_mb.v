@@ -1,15 +1,15 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-//Date        : Wed Jan 12 20:40:11 2022
-//Host        : wei-Berkeley running 64-bit Ubuntu 20.04.3 LTS
+//Date        : Thu Jan 12 12:10:23 2023
+//Host        : wei-Berkeley running 64-bit Ubuntu 20.04.5 LTS
 //Command     : generate_target base_mb.bd
 //Design      : base_mb
 //Purpose     : IP block netlist
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "base_mb,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=base_mb,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=123,numReposBlks=94,numNonXlnxBlks=9,numHierBlks=29,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=20,numPkgbdBlks=0,bdsource=USER,da_aeth_cnt=2,da_axi4_cnt=29,da_board_cnt=6,da_clkrst_cnt=3,da_mb_cnt=1,synth_mode=Global}" *) (* HW_HANDOFF = "base_mb.hwdef" *) 
+(* CORE_GENERATION_INFO = "base_mb,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=base_mb,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=124,numReposBlks=95,numNonXlnxBlks=9,numHierBlks=29,maxHierDepth=1,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=21,numPkgbdBlks=0,bdsource=USER,da_aeth_cnt=2,da_axi4_cnt=29,da_board_cnt=6,da_clkrst_cnt=3,da_mb_cnt=1,synth_mode=Global}" *) (* HW_HANDOFF = "base_mb.hwdef" *) 
 module base_mb
    (ADC_DIN_N,
     ADC_DIN_P,
@@ -42,6 +42,7 @@ module base_mb
     clk_125m_gtx_n_i_0,
     clk_125m_gtx_p_i_0,
     clk_20m_vcxo_i_0,
+    ext_trig_io_0,
     flash_dac,
     flash_led_n,
     flash_led_p,
@@ -132,6 +133,7 @@ module base_mb
   input clk_125m_gtx_n_i_0;
   input clk_125m_gtx_p_i_0;
   input clk_20m_vcxo_i_0;
+  inout ext_trig_io_0;
   output flash_dac;
   output flash_led_n;
   output flash_led_p;
@@ -267,6 +269,7 @@ module base_mb
   wire Net5;
   wire Net6;
   wire [9:0]Net7;
+  wire Net8;
   wire OBUFDS_FOR_CLK_0_O;
   wire OBUFDS_FOR_CLK_0_OB;
   wire [31:0]PH_BL_FIFO_0_ph_elapsed_time1;
@@ -489,6 +492,7 @@ module base_mb
   wire [28:0]elapsed_time_gen_0_elapsed_time1;
   wire [28:0]elapsed_time_gen_0_elapsed_time2;
   wire [28:0]elapsed_time_gen_0_elapsed_time3;
+  wire ext_trig_0_ext_trig_maroc;
   wire firmware_ID_ROM_0_data_out;
   wire flash_control_0_flash_dac;
   wire flash_control_0_pulse_n;
@@ -516,6 +520,7 @@ module base_mb
   wire maroc_dc_0_adc_clk_out;
   wire [3:0]maroc_dc_0_hold1;
   wire [3:0]maroc_dc_0_hold2;
+  wire maroc_dc_0_pixel_trig;
   wire [5:0]maroc_dc_0_testpoint;
   wire [3:0]maroc_slow_control_0_SC_CLK;
   wire [3:0]maroc_slow_control_0_SC_DOUT;
@@ -1946,6 +1951,10 @@ module base_mb
         .elapsed_time2(elapsed_time_gen_0_elapsed_time2),
         .elapsed_time3(elapsed_time_gen_0_elapsed_time3),
         .one_pps(PPS_IO_0_pps_inside_out));
+  base_mb_ext_trig_0_2 ext_trig_0
+       (.ext_trig_io(ext_trig_io_0),
+        .ext_trig_maroc(ext_trig_0_ext_trig_maroc),
+        .pixel_trig_maroc(maroc_dc_0_pixel_trig));
   base_mb_firmware_ID_ROM_0_0 firmware_ID_ROM_0
        (.addr(Bit_29_24_Dout),
         .data_out(firmware_ID_ROM_0_data_out));
@@ -1986,7 +1995,7 @@ module base_mb
         .elapsed_time_1(elapsed_time_gen_0_elapsed_time1),
         .elapsed_time_2(elapsed_time_gen_0_elapsed_time2),
         .elapsed_time_3(elapsed_time_gen_0_elapsed_time3),
-        .ext_trig(xlconstant_5_dout),
+        .ext_trig(ext_trig_0_ext_trig_maroc),
         .frm_clk(in_buf_ds_1bit_0_out),
         .hold1(maroc_dc_0_hold1),
         .hold2(maroc_dc_0_hold2),
@@ -2012,6 +2021,7 @@ module base_mb
         .or_trig1(or_trig1_0_1),
         .or_trig2(or_trig2_0_1),
         .or_trig3(or_trig3_0_1),
+        .pixel_trig(maroc_dc_0_pixel_trig),
         .ref_clk(clk_wiz_1_clk_out2),
         .s00_axi_aclk(microblaze_0_Clk),
         .s00_axi_araddr(microblaze_0_axi_periph_M04_AXI_ARADDR[5:0]),

@@ -49,6 +49,7 @@ set_false_path -from [get_clocks -of_objects [get_pins base_mb_i/wrc_board_quabo
 set_false_path -from [get_pins base_mb_i/maroc_dc_0/inst/USR_LOGIC/QDATA_RX/IDDR_FRAME/C] -to [get_pins base_mb_i/maroc_dc_0/inst/USR_LOGIC/adc_frame_axi_sync_reg/D]
 #This is from the 100MHz axi_clk to the 200MHz clock used for the IM counters.  These outputs are held during the reading of the values
 #set_false_path -from [get_clocks -of_objects [get_pins base_mb_i/clk_wiz_1/inst/mmcm_adv_inst/CLKOUT0]] -to [get_clocks -of_objects [get_pins base_mb_i/clk_wiz_1/inst/mmcm_adv_inst/CLKOUT1]]
+set_max_delay -datapath_only -from [get_clocks [get_clocks -of_objects [get_pins base_mb_i/clk_wiz_1/inst/mmcm_adv_inst/CLKOUT0]]] -to [get_clocks [get_clocks -of_objects [get_pins base_mb_i/clk_wiz_1/inst/mmcm_adv_inst/CLKOUT1]]] 10.0
 
 #These are deep within the WR core
 set_false_path -from [get_clocks -of_objects [get_pins base_mb_i/wrc_board_quabo_Light_0/U0/cmp_xwrc_board_quabo/cmp_xwrc_platform/gen_default_plls.gen_kintex7_default_plls.cmp_dmtd_clk_pll/CLKOUT0]] -to [get_clocks -of_objects [get_pins base_mb_i/wrc_board_quabo_Light_0/U0/cmp_xwrc_board_quabo/cmp_xwrc_platform/gen_default_plls.gen_kintex7_default_plls.cmp_sys_clk_pll/CLKOUT0]]
@@ -104,29 +105,5 @@ set_false_path -from [get_clocks base_mb_i/wrc_board_quabo_Light_0/U0/cmp_xwrc_b
 
 
 
-create_debug_core u_ila_0 ila
-set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
-set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
-set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
-set_property C_DATA_DEPTH 1024 [get_debug_cores u_ila_0]
-set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
-set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
-set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
-set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
-set_property port_width 1 [get_debug_ports u_ila_0/clk]
-connect_debug_port u_ila_0/clk [get_nets [list base_mb_i/clk_wiz_1/inst/clk_100]]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
-set_property port_width 32 [get_debug_ports u_ila_0/probe0]
-connect_debug_port u_ila_0/probe0 [get_nets [list {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[0]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[1]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[2]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[3]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[4]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[5]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[6]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[7]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[8]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[9]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[10]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[11]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[12]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[13]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[14]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[15]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[16]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[17]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[18]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[19]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[20]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[21]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[22]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[23]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[24]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[25]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[26]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[27]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[28]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[29]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[30]} {base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tdata[31]}]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
-set_property port_width 1 [get_debug_ports u_ila_0/probe1]
-connect_debug_port u_ila_0/probe1 [get_nets [list base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tlast]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
-set_property port_width 1 [get_debug_ports u_ila_0/probe2]
-connect_debug_port u_ila_0/probe2 [get_nets [list base_mb_i/PH_BL_FIFO_0/axi_str_rxd_tvalid]]
-set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]
-set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]
-set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]
-connect_debug_port dbg_hub/clk [get_nets u_ila_0_clk_100]
+
+

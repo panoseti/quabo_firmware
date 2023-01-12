@@ -1,8 +1,8 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-//Date        : Wed Jan 12 20:40:12 2022
-//Host        : wei-Berkeley running 64-bit Ubuntu 20.04.3 LTS
+//Date        : Thu Jan 12 12:10:24 2023
+//Host        : wei-Berkeley running 64-bit Ubuntu 20.04.5 LTS
 //Command     : generate_target base_mb_wrapper.bd
 //Design      : base_mb_wrapper
 //Purpose     : IP block netlist
@@ -41,6 +41,7 @@ module base_mb_wrapper
     clk_125m_gtx_n_i_0,
     clk_125m_gtx_p_i_0,
     clk_20m_vcxo_i_0,
+    ext_trig_io_0,
     flash_dac,
     flash_led_n,
     flash_led_p,
@@ -127,6 +128,7 @@ module base_mb_wrapper
   input clk_125m_gtx_n_i_0;
   input clk_125m_gtx_p_i_0;
   input clk_20m_vcxo_i_0;
+  inout ext_trig_io_0;
   output flash_dac;
   output flash_led_n;
   output flash_led_p;
@@ -214,6 +216,7 @@ module base_mb_wrapper
   wire clk_125m_gtx_n_i_0;
   wire clk_125m_gtx_p_i_0;
   wire clk_20m_vcxo_i_0;
+  wire ext_trig_io_0;
   wire flash_dac;
   wire flash_led_n;
   wire flash_led_p;
@@ -308,6 +311,7 @@ module base_mb_wrapper
         .clk_125m_gtx_n_i_0(clk_125m_gtx_n_i_0),
         .clk_125m_gtx_p_i_0(clk_125m_gtx_p_i_0),
         .clk_20m_vcxo_i_0(clk_20m_vcxo_i_0),
+        .ext_trig_io_0(ext_trig_io_0),
         .flash_dac(flash_dac),
         .flash_led_n(flash_led_n),
         .flash_led_p(flash_led_p),

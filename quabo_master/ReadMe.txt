@@ -1,3 +1,14 @@
+V20.4(5):
+(1) added 2/3 pixel trigger function:
+	ph event can be triggered by 2 pixels or 3 pixels.
+	If you want to use this function, you need to set GOE mask first.
+	More info about GOE mask is here: https://github.com/panoseti/panoseti/wiki/Quabo-packet-interface
+
+V20.2(3):
+(1) added anytrig function: 
+	If one quabo is triggerd by a ph event, other 3 quabos can also be triggered by this quabo.
+	The max nanosec difference between the four ph packets from the 4 quabos is ~10ns. 
+
 v20.0(1):
 (1) Fast PH readout is implemented. This part is moved from microblaze software to FPGA, so it's much faster now.
 (2) 10-bit TAI time is added to IM and PH packets, which is from WR.

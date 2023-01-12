@@ -1,4 +1,4 @@
-00:29:13 **** Auto Build of project standalone_bsp_0 ****
+18:30:57 **** Build of project standalone_bsp_0 ****
 make -k all 
 Running Make include in microblaze_0/libsrc/tmrctr_v4_5/src
 make -C microblaze_0/libsrc/tmrctr_v4_5/src -s include  "SHELL=/bin/sh" "COMPILER=mb-gcc" "ARCHIVER=mb-ar" "COMPILER_FLAGS=  -O2 -c -mcpu=v11.0 -mlittle-endian -mxl-frequency -mxl-soft-mul" "EXTRA_COMPILER_FLAGS=-ffunction-sections -fdata-sections -Wall -Wextra -g3"
@@ -130,5 +130,5 @@ xwdttb.c:1225:5: note: declared here
      ^~~~~~~~~~~~~~~~~~~~~~
 Finished building libraries
 
-00:29:26 Build Finished (took 12s.572ms)
+18:31:06 Build Finished (took 9s.815ms)
 

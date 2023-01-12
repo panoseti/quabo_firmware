@@ -2,6 +2,10 @@
 <?scdStore version="2"?><scannerInfo id="org.eclipse.cdt.make.core.discoveredScannerInfo">
 <instance id="xilinx.gnu.mb.exe.debug.1237799902;xilinx.gnu.mb.exe.debug.1237799902.">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
+<includePath path="/home/wei/Software/Vivado/2018.3/SDK/2018.3/gnu/microblaze/lin/bin/../lib/gcc/microblaze-xilinx-elf/7.3.1/include"/>
+<includePath path="/home/wei/Software/Vivado/2018.3/SDK/2018.3/gnu/microblaze/lin/bin/../lib/gcc/microblaze-xilinx-elf/7.3.1/include-fixed"/>
+<includePath path="/home/wei/Software/Vivado/2018.3/SDK/2018.3/gnu/microblaze/lin/bin/../lib/gcc/microblaze-xilinx-elf/7.3.1/../../../../microblaze-xilinx-elf/include"/>
+<includePath path="/home/wei/Software/Vivado/2018.3/SDK/2018.3/gnu/microblaze/lin/bin/../microblaze-xilinx-elf/sysroot/usr/include"/>
 <includePath path="c:\xilinx\sdk\2018.3\gnu\microblaze\nt\bin\../lib/gcc/microblaze-xilinx-elf/7.3.1/include"/>
 <includePath path="c:\xilinx\sdk\2018.3\gnu\microblaze\nt\bin\../lib/gcc/microblaze-xilinx-elf/7.3.1/include-fixed"/>
 <includePath path="c:\xilinx\sdk\2018.3\gnu\microblaze\nt\bin\../lib/gcc/microblaze-xilinx-elf/7.3.1/../../../../microblaze-xilinx-elf/include"/>
@@ -577,6 +581,10 @@
 </instance>
 <instance id="xilinx.gnu.mb.exe.debug.1237799902;xilinx.gnu.mb.exe.debug.1237799902.;xilinx.gnu.mb.c.toolchain.compiler.debug.1863822130;xilinx.gnu.compiler.input.611108924">
 <collector id="org.eclipse.cdt.make.core.PerProjectSICollector">
+<includePath path="/home/wei/Software/Vivado/2018.3/SDK/2018.3/gnu/microblaze/lin/bin/../lib/gcc/microblaze-xilinx-elf/7.3.1/include"/>
+<includePath path="/home/wei/Software/Vivado/2018.3/SDK/2018.3/gnu/microblaze/lin/bin/../lib/gcc/microblaze-xilinx-elf/7.3.1/include-fixed"/>
+<includePath path="/home/wei/Software/Vivado/2018.3/SDK/2018.3/gnu/microblaze/lin/bin/../lib/gcc/microblaze-xilinx-elf/7.3.1/../../../../microblaze-xilinx-elf/include"/>
+<includePath path="/home/wei/Software/Vivado/2018.3/SDK/2018.3/gnu/microblaze/lin/bin/../microblaze-xilinx-elf/sysroot/usr/include"/>
 <includePath path="c:\xilinx\sdk\2018.3\gnu\microblaze\nt\bin\../lib/gcc/microblaze-xilinx-elf/7.3.1/include"/>
 <includePath path="c:\xilinx\sdk\2018.3\gnu\microblaze\nt\bin\../lib/gcc/microblaze-xilinx-elf/7.3.1/include-fixed"/>
 <includePath path="c:\xilinx\sdk\2018.3\gnu\microblaze\nt\bin\../lib/gcc/microblaze-xilinx-elf/7.3.1/../../../../microblaze-xilinx-elf/include"/>

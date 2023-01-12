@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2022 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2023 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -47,7 +47,7 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: xilinx.com:user:maroc_dc:1.8
+// IP VLNV: xilinx.com:user:maroc_dc:2.1
 // IP Revision: 2
 
 `timescale 1ns/1ps
@@ -74,6 +74,7 @@ module base_mb_maroc_dc_0_0 (
   ref_clk,
   adc_clk_out,
   ext_trig,
+  pixel_trig,
   testpoint,
   ET_clk,
   ET_clk_1,
@@ -149,6 +150,7 @@ input wire frm_clk;
 input wire ref_clk;
 output wire adc_clk_out;
 input wire ext_trig;
+output wire pixel_trig;
 output wire [5 : 0] testpoint;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME ET_clk, FREQ_HZ 250000000, PHASE 0.0, CLK_DOMAIN base_mb_clk_wiz_0_0_clk_out250_0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 ET_clk CLK" *)
@@ -271,6 +273,7 @@ input wire m01_axis_aresetn;
     .ref_clk(ref_clk),
     .adc_clk_out(adc_clk_out),
     .ext_trig(ext_trig),
+    .pixel_trig(pixel_trig),
     .testpoint(testpoint),
     .ET_clk(ET_clk),
     .ET_clk_1(ET_clk_1),

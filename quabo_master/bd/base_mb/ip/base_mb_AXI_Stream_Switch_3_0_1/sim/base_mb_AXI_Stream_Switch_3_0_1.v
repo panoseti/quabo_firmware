@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2021 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2023 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -47,7 +47,7 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: user.org:user:AXI_Stream_Switch_3:1.2
+// IP VLNV: user.org:user:AXI_Stream_Switch_3:1.3
 // IP Revision: 1
 
 `timescale 1ns/1ps

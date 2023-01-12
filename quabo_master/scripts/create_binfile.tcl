@@ -9,7 +9,7 @@ if { [info exists ::origin_dir_loc] } {
   set origin_dir $::origin_dir_loc
 }
 # Set the project name- must be the same as that used in build_quabo.tcl
-set _xil_proj_name_ "quabo_V0200"
+set _xil_proj_name_ "quabo_proj"
 # Use project name variable, if specified in the tcl shell
 if { [info exists ::user_project_name] } {
   set _xil_proj_name_ $::user_project_name

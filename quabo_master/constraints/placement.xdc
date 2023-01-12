@@ -15,3 +15,4 @@ set_property IOB FALSE [get_cells base_mb_i/axi_quad_spi_1/U0/NO_DUAL_QUAD_MODE.
 
 
 
+

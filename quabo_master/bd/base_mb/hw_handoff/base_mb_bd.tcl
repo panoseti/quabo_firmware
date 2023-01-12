@@ -40,7 +40,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 
 # The design that will be created by this Tcl script contains the following 
 # module references:
-# IBUFDS_FOR_CLK, IM_FIFO, OBUFDS_FOR_CLK, PPS_IO, SPI_MUX, SPI_STARTUP, SPI_access, StepDrive_ShutterCtrl_Sel, TAI_IO, delay, delay, elapsed_time_gen, firmware_ID_ROM, flash_control, in_buf_ds_1bit, in_buf_ds_4bit, in_buf_ds_1bit, pinout_three_state, step_drive, stim_gen
+# IBUFDS_FOR_CLK, IM_FIFO, OBUFDS_FOR_CLK, PPS_IO, SPI_MUX, SPI_STARTUP, SPI_access, StepDrive_ShutterCtrl_Sel, TAI_IO, delay, delay, elapsed_time_gen, ext_trig, firmware_ID_ROM, flash_control, in_buf_ds_1bit, in_buf_ds_4bit, in_buf_ds_1bit, pinout_three_state, step_drive, stim_gen
 
 # Please add the sources of those modules before sourcing this Tcl script.
 
@@ -291,6 +291,7 @@ proc create_root_design { parentCell } {
   set clk_125m_gtx_n_i_0 [ create_bd_port -dir I clk_125m_gtx_n_i_0 ]
   set clk_125m_gtx_p_i_0 [ create_bd_port -dir I clk_125m_gtx_p_i_0 ]
   set clk_20m_vcxo_i_0 [ create_bd_port -dir I clk_20m_vcxo_i_0 ]
+  set ext_trig_io_0 [ create_bd_port -dir IO ext_trig_io_0 ]
   set flash_dac [ create_bd_port -dir O flash_dac ]
   set flash_led_n [ create_bd_port -dir O flash_led_n ]
   set flash_led_p [ create_bd_port -dir O flash_led_p ]
@@ -336,10 +337,10 @@ proc create_root_design { parentCell } {
   set user_sfp_0_sfp_txp_o [ create_bd_port -dir O user_sfp_0_sfp_txp_o ]
 
   # Create instance: AXI_Stream_Switch_3_0, and set properties
-  set AXI_Stream_Switch_3_0 [ create_bd_cell -type ip -vlnv user.org:user:AXI_Stream_Switch_3:1.2 AXI_Stream_Switch_3_0 ]
+  set AXI_Stream_Switch_3_0 [ create_bd_cell -type ip -vlnv user.org:user:AXI_Stream_Switch_3:1.3 AXI_Stream_Switch_3_0 ]
 
   # Create instance: AXI_Stream_Switch_3_1, and set properties
-  set AXI_Stream_Switch_3_1 [ create_bd_cell -type ip -vlnv user.org:user:AXI_Stream_Switch_3:1.2 AXI_Stream_Switch_3_1 ]
+  set AXI_Stream_Switch_3_1 [ create_bd_cell -type ip -vlnv user.org:user:AXI_Stream_Switch_3:1.3 AXI_Stream_Switch_3_1 ]
 
   # Create instance: Bit_0_0, and set properties
   set Bit_0_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 Bit_0_0 ]
@@ -992,6 +993,17 @@ proc create_root_design { parentCell } {
      return 1
    }
   
+  # Create instance: ext_trig_0, and set properties
+  set block_name ext_trig
+  set block_cell_name ext_trig_0
+  if { [catch {set ext_trig_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $ext_trig_0 eq "" } {
+     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
   # Create instance: firmware_ID_ROM_0, and set properties
   set block_name firmware_ID_ROM
   set block_cell_name firmware_ID_ROM_0
@@ -1048,7 +1060,7 @@ proc create_root_design { parentCell } {
    }
   
   # Create instance: maroc_dc_0, and set properties
-  set maroc_dc_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:maroc_dc:1.8 maroc_dc_0 ]
+  set maroc_dc_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:maroc_dc:2.1 maroc_dc_0 ]
   set_property -dict [ list \
    CONFIG.C_M01_AXIS_TDATA_WIDTH {32} \
    CONFIG.PCB_REV {0} \
@@ -1354,6 +1366,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net Net5 [get_bd_ports sd1_ss] [get_bd_pins StepDrive_ShutterCtr_0/sd1_ss]
   connect_bd_net -net Net6 [get_bd_ports sd3_lss] [get_bd_pins StepDrive_ShutterCtr_0/sd3_lss]
   connect_bd_net -net Net7 [get_bd_ports tai_inout] [get_bd_pins TAI_IO_0/tai_inout]
+  connect_bd_net -net Net8 [get_bd_ports ext_trig_io_0] [get_bd_pins ext_trig_0/ext_trig_io]
   connect_bd_net -net OBUFDS_FOR_CLK_0_O [get_bd_ports sysclkout_p] [get_bd_pins OBUFDS_FOR_CLK_0/O]
   connect_bd_net -net OBUFDS_FOR_CLK_0_OB [get_bd_ports sysclkout_n] [get_bd_pins OBUFDS_FOR_CLK_0/OB]
   connect_bd_net -net PH_BL_FIFO_0_ph_elapsed_time1 [get_bd_pins HighSpeed_PH_v1_0_0/ph_elapsed_time] [get_bd_pins PH_BL_FIFO_0/ph_elapsed_time]
@@ -1428,6 +1441,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net elapsed_time_gen_0_elapsed_time1 [get_bd_pins elapsed_time_gen_0/elapsed_time1] [get_bd_pins maroc_dc_0/elapsed_time_1]
   connect_bd_net -net elapsed_time_gen_0_elapsed_time2 [get_bd_pins elapsed_time_gen_0/elapsed_time2] [get_bd_pins maroc_dc_0/elapsed_time_2]
   connect_bd_net -net elapsed_time_gen_0_elapsed_time3 [get_bd_pins elapsed_time_gen_0/elapsed_time3] [get_bd_pins maroc_dc_0/elapsed_time_3]
+  connect_bd_net -net ext_trig_0_ext_trig_maroc [get_bd_pins ext_trig_0/ext_trig_maroc] [get_bd_pins maroc_dc_0/ext_trig]
   connect_bd_net -net firmware_ID_ROM_0_data_out [get_bd_pins firmware_ID_ROM_0/data_out] [get_bd_pins xlconcat_2/In4]
   connect_bd_net -net flash_control_0_flash_dac [get_bd_ports flash_dac] [get_bd_pins flash_control_0/flash_dac]
   connect_bd_net -net flash_control_0_pulse_n [get_bd_ports flash_led_n] [get_bd_pins flash_control_0/pulse_n]
@@ -1447,6 +1461,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net maroc_dc_0_adc_clk_out [get_bd_ports adc_clk_out] [get_bd_pins maroc_dc_0/adc_clk_out]
   connect_bd_net -net maroc_dc_0_hold1 [get_bd_ports hold1] [get_bd_pins maroc_dc_0/hold1]
   connect_bd_net -net maroc_dc_0_hold2 [get_bd_ports hold2] [get_bd_pins maroc_dc_0/hold2]
+  connect_bd_net -net maroc_dc_0_pixel_trig [get_bd_pins ext_trig_0/pixel_trig_maroc] [get_bd_pins maroc_dc_0/pixel_trig]
   connect_bd_net -net maroc_dc_0_testpoint [get_bd_pins maroc_dc_0/testpoint] [get_bd_pins xlslice_3/Din]
   connect_bd_net -net maroc_slow_control_0_SC_CLK [get_bd_ports SC_CLK] [get_bd_pins maroc_slow_control_0/SC_CLK]
   connect_bd_net -net maroc_slow_control_0_SC_DOUT [get_bd_ports SC_DOUT] [get_bd_pins maroc_slow_control_0/SC_DOUT]
@@ -1502,7 +1517,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net xlconstant_2_dout [get_bd_pins rst_clk_wiz_1_100M_1/aux_reset_in] [get_bd_pins rst_clk_wiz_1_100M_1/ext_reset_in] [get_bd_pins xlconstant_2/dout]
   connect_bd_net -net xlconstant_3_dout [get_bd_pins rst_clk_wiz_1_100M/ext_reset_in] [get_bd_pins xlconstant_3/dout]
   connect_bd_net -net xlconstant_4_dout [get_bd_pins wrc_board_quabo_Light_0/clk_ext_10m] [get_bd_pins wrc_board_quabo_Light_0/reset_i] [get_bd_pins xlconstant_4/dout]
-  connect_bd_net -net xlconstant_5_dout [get_bd_pins maroc_dc_0/ext_trig] [get_bd_pins wrc_board_quabo_Light_0/sfp_mod_def0_i] [get_bd_pins xlconstant_5/dout]
+  connect_bd_net -net xlconstant_5_dout [get_bd_pins wrc_board_quabo_Light_0/sfp_mod_def0_i] [get_bd_pins xlconstant_5/dout]
   connect_bd_net -net xlconstant_6_dout [get_bd_pins wrc_board_quabo_Light_0/sfp_tx_fault_i] [get_bd_pins xlconstant_6/dout]
   connect_bd_net -net xlconstant_8_dout [get_bd_pins AXI_Stream_Switch_3_1/s2_axis_tdata] [get_bd_pins xlconstant_8/dout]
   connect_bd_net -net xlconstant_9_dout [get_bd_pins AXI_Stream_Switch_3_1/s2_axis_tlast] [get_bd_pins xlconstant_9/dout]
