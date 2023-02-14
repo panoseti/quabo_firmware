@@ -1,3 +1,7 @@
+Note: V20.4(5) is the last version in this repository.
+Next, we will push our latest design here:
+https://github.com/panoseti/quabo_master.git
+
 V20.4(5):
 (1) added 2/3 pixel trigger function:
 	ph event can be triggered by 2 pixels or 3 pixels.
