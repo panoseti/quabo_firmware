@@ -100,8 +100,13 @@ entity wrc_board_quabo is
     sfp_rxp_i         : in    std_logic;
     sfp_rxn_i         : in    std_logic;
     sfp_mod_def0_i    : in    std_logic;          -- sfp detect
-    sfp_mod_def1_b    : inout std_logic;          -- scl
-    sfp_mod_def2_b    : inout std_logic;          -- sda
+    sfp_mod_def1_i    : in    std_logic;          -- scl
+    sfp_mod_def1_o    : out   std_logic;
+    sfp_mod_def1_t_o  : out   std_logic;
+    sfp_mod_def2_i    : in    std_logic;          -- sda
+    sfp_mod_def2_o    : out   std_logic;
+    sfp_mod_def2_t_o  : out   std_logic;
+
     sfp_rate_select_o : out   std_logic;
     sfp_tx_fault_i    : in    std_logic;
     sfp_tx_disable_o  : out   std_logic;
@@ -111,7 +116,9 @@ entity wrc_board_quabo is
     -- Onewire interface
     ---------------------------------------------------------------------------
 
-    onewire_b : inout std_logic;
+    onewire_i     : in  std_logic;
+    onewire_o     : out std_logic;
+    onewire_t_o   : out std_logic;
 
     ---------------------------------------------------------------------------
     -- UART
@@ -155,11 +162,11 @@ entity wrc_board_quabo is
     ---------------------------------------------------------------------------
     -- Red LED next to the SFP: blinking indicates that packets are being
     -- transferred.
---    led_act_o   : out std_logic;
+    led_act_o   : out std_logic;
     -- Green LED next to the SFP: indicates if the link is up.
---    led_link_o  : out std_logic;
+    led_link_o  : out std_logic;
 
-    reset_i     : in  std_logic;
+    reset_n_i     : in  std_logic;
 
     ---------------------------------------------------------------------------
     -- Digital I/O FMC Pins
@@ -222,7 +229,6 @@ architecture top of wrc_board_quabo is
   -----------------------------------------------------------------------------
 
   -- clock and reset
-  signal reset_n        : std_logic;
   signal clk_sys_62m5   : std_logic;
   signal rst_sys_62m5_n : std_logic;
   signal rst_ref_62m5_n : std_logic;
@@ -262,8 +268,8 @@ architecture top of wrc_board_quabo is
   signal wrs_tx_cfg_i: t_tx_streamer_cfg;
   signal wrs_rx_cfg_i: t_rx_streamer_cfg;
   --
-  signal led_act_o : std_logic;
-  signal led_link_o : std_logic;
+  --signal led_act_o : std_logic;
+  --signal led_link_o : std_logic;
   signal abscal_tx_o : std_logic;
   signal abscal_rx_o : std_logic;
   signal eeprom_scl_b : std_logic;
@@ -296,6 +302,7 @@ architecture top of wrc_board_quabo is
   --signal clk_ext_10m_p_i :  std_logic;
   --signal clk_ext_10m_n_i :  std_logic;
   signal pps_i           :  std_logic;
+  signal onewire_oe_n    :  std_logic;
 begin  -- architecture top
 
   -----------------------------------------------------------------------------
@@ -343,7 +350,6 @@ begin  -- architecture top
   filter_remote_rx<= '0';
   fixed_latency_rx<= (27 downto 0 => '0');
   
-  reset_n <= reset_i; -- Reset = low active on quabo
   wrs_tx_cfg_i.mac_local <= mac_local_tx;
   wrs_tx_cfg_i.mac_target<= mac_target_tx;
   wrs_tx_cfg_i.ethertype <= ethertype_tx;
@@ -364,7 +370,7 @@ begin  -- architecture top
       g_dpram_initf               => g_dpram_initf,
       g_fabric_iface              => STREAMERS)--PLAIN)
     port map (
-      areset_n_i          => reset_n,
+      areset_n_i          => reset_n_i,
       clk_20m_vcxo_i      => clk_20m_vcxo_i,
       clk_125m_gtp_n_i    => clk_125m_gtx_n_i,
       clk_125m_gtp_p_i    => clk_125m_gtx_p_i,
@@ -384,10 +390,10 @@ begin  -- architecture top
       sfp_rxp_i           => sfp_rxp_i,
       sfp_rxn_i           => sfp_rxn_i,
       sfp_det_i           => sfp_mod_def0_i,
-      sfp_sda_i           => sfp_sda_in,
-      sfp_sda_o           => sfp_sda_out,
-      sfp_scl_i           => sfp_scl_in,
-      sfp_scl_o           => sfp_scl_out,
+      sfp_sda_i           => sfp_mod_def2_i,
+      sfp_sda_o           => sfp_mod_def2_t_o,
+      sfp_scl_i           => sfp_mod_def1_i,
+      sfp_scl_o           => sfp_mod_def1_t_o,
       sfp_rate_select_o   => sfp_rate_select_o,
       sfp_tx_fault_i      => sfp_tx_fault_i,
       sfp_tx_disable_o    => sfp_tx_disable_o,
@@ -398,7 +404,7 @@ begin  -- architecture top
       eeprom_scl_i        => eeprom_scl_in,
       eeprom_scl_o        => eeprom_scl_out,
 
-      onewire_i           => onewire_data,
+      onewire_i           => onewire_i,
       onewire_oen_o       => onewire_oe,
       -- Uart
       uart_rxd_i          => uart_rxd_i,
@@ -435,23 +441,25 @@ begin  -- architecture top
 	  
  --  clk_sys_o <= clk_sys_62m5; RR changed
   clk_sys_o <= clk_ref_62m5; -- RR changed
-  -- Tristates for SFP EEPROM
-  sfp_mod_def1_b <= '0' when sfp_scl_out = '0' else 'Z';
-  sfp_mod_def2_b <= '0' when sfp_sda_out = '0' else 'Z';
-  sfp_scl_in     <= sfp_mod_def1_b;
-  sfp_sda_in     <= sfp_mod_def2_b;
 
-  -- tri-state onewire access
-  onewire_b    <= '0' when (onewire_oe = '1') else 'Z';
-  onewire_data <= onewire_b;
+  -- Tristate outputs for SFP EEPROM:
+  -- The "outputs" used the above IP are really
+  -- active low tristate enables. Output is always 0
+  -- when enabled.
+  sfp_mod_def2_o <= '0';
+  sfp_mod_def1_o <= '0';
 
+  -- Tristate output for ONEWIRE:
+  -- Output is always 0 when enabled.
+  onewire_o <= '0';
+  onewire_t_o <= not onewire_oe;
 
-  eeprom_sda_b <= '0' when (eeprom_sda_out = '0') else 'Z';
-  eeprom_sda_in <= eeprom_sda_b;
+--  eeprom_sda_b <= '0' when (eeprom_sda_out = '0') else 'Z';
+--  eeprom_sda_in <= eeprom_sda_b;
 --  dio_scl_b <= '0' when (eeprom_scl_out = '0') else 'Z';
 --  eeprom_scl_in <= dio_scl_b;
-  eeprom_scl_b <= '0' when (eeprom_scl_out = '0') else 'Z';
-  eeprom_scl_in <= eeprom_scl_b;
+--  eeprom_scl_b <= '0' when (eeprom_scl_out = '0') else 'Z';
+--  eeprom_scl_in <= eeprom_scl_b;
 
   -- Div by 2 reference clock to LEMO connector
   process(clk_ref_62m5)
